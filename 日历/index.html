@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0}
+#title{height:50px;line-height:50px;text-align:center;border-bottom:1px solid #000}
+#pre{position:absolute;top:17px;left:0;}
+#next{position:absolute;top:17px;right:0;}
+#calender{width:230px;margin:100px auto;border:1px solid #000;position:relative;}
+ul{list-style:none;overflow:hidden;padding-left:10px;text-align:center;}
+li{float:left;}
+.week{margin-top:10px;}
+.week li{width:30px;height:30px;line-height:30px;}
+.dateul li{width:30px;height:30px;line-height:30px;}
+.ccc{color:#ccc;}
+.red{color:#fff;background:#F90;}
+.zhoumo{color:red}
+</style>
+<script>
+	window.onload=function(){
+		var calendar=document.getElementById('calendar');
+		var date_list=document.getElementById('date_list');
+		var pre=document.getElementById('pre');
+		var next=document.getElementById('next');
+		var title=document.getElementById('title');
+
+
+
+       // 必要数据：
+		var all_day=0;//所有的天数
+		var today=0;
+		var f_day_week=0;//本月第一天是星期几
+		var iNow=0;
+
+
+
+		function Date_fn(){
+
+			var oDate=new Date();//实例化对象
+			today=oDate.getDate();//今天
+			var now_month=oDate.getMonth();//8月
+			
+			oDate.setMonth(oDate.getMonth()+iNow,1);//
+			
+			
+			f_day_week=oDate.getDay();
+			oDate.setMonth(oDate.getMonth()+1,0)
+			all_day=oDate.getDate();
+			oDate.setDate(1);
+			date_list.innerHTML="";
+			if(f_day_week==0) f_day_week=7;
+			for(var i=1;i<f_day_week;i++){
+				var li=document.createElement('li');
+				date_list.appendChild(li);
+
+			};
+			for(var i=0;i<all_day;i++){
+				var li=document.createElement('li');
+				li.innerHTML=i+1;
+				date_list.appendChild(li);
+
+		     };
+		     var aLi=date_list.getElementsByTagName('li');
+		     
+		    if(iNow<0){
+		    	for(i=0;i<aLi.length;i++){
+		    		aLi[i].className="ccc";
+		    	}
+		    }else if(iNow>0){
+		    	for(i=0;i<aLi.length;i++){
+					if(i%7==5 || i%7==6){
+			     		aLi[i].className="zhoumo";
+			     	}else{aLi[i].className="";}
+		    	}
+		    }else{
+
+		     for(var i=0;i<aLi.length;i++){
+			     	if(aLi[i].innerHTML<today){
+			     		aLi[i].className="ccc"
+			     		
+			     	}else if(aLi[i].innerHTML==today){
+			     		aLi[i].className="red";
+
+			     	}else if(i%7==5 || i%7==6){
+			     		aLi[i].className="zhoumo";
+			     	}
+			 	}
+			 }
+			 title.innerHTML=oDate.getFullYear()+'年'+(oDate.getMonth()+1)+'月';
+	 	};
+	 	Date_fn();
+
+	 	pre.onclick=function(){
+	 		iNow--
+	 		Date_fn();
+	 	}
+	 	next.onclick=function(){
+	 		iNow++
+	 		Date_fn();
+	 	}
+	}
+</script>
+</head>
+
+<body>
+<div id="calender">
+	<h4 id="title"></h4>
+    <a href="javascript:;" id="pre">上月</a>
+    <a href="javascript:;" id="next">下月</a>
+    <ul class="week" id="wk">
+    	<li>一</li>
+    	<li>二</li>
+    	<li>三</li>
+    	<li>四</li>
+    	<li>五</li>
+    	<li>六</li>
+    	<li>日</li>
+    </ul>
+    <ul id="date_list" class="dateul">
+    	<!--<li>1</li>
+    	<li>2</li>
+    	<li>3</li>
+    	<li>4</li>
+    	<li>5</li>
+    	<li>6</li>
+    	<li>7</li>
+    	<li>8</li>
+    	<li>9</li>
+    	<li>10</li>
+    	<li>11</li>
+    	<li>12</li>-->
+    </ul>
+</div>
+</body>
+</html>
